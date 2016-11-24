@@ -308,6 +308,6 @@ func (p *pipe) SetWriteTimeout(nsec int64) error {
 func main() {
 
 	print("Just for testing\n")
-	TestServer()
-	//TestClient()
+	//TestServer()
+	TestClient()
 }

@@ -28,6 +28,7 @@ type GetBestBlockHashResp struct {
 
 func (t *Arith) Multiply(args *Args, result *Result) error {
 	log.Printf("Multiplying %d with %d\n", args.A, args.B)
+	print("test the multiply\n")
 	*result = Result(args.A * args.B)
 	return nil
 }
@@ -79,9 +80,9 @@ func (t *Arith) getbestblockhash(args *Args, result *GetBestBlockHashResp) error
 }
 
 func startServer() {
-	arith := new(Arith)
+	//arith := new(Arith)
 	server := rpc.NewServer()
-	server.Register(arith)
+	//server.Register(arith)
 
 	server.HandleHTTP(rpc.DefaultRPCPath, rpc.DefaultDebugPath)
 
@@ -116,8 +117,8 @@ func main() {
 	dec := json.NewDecoder(conn)
 
 	for i := 0; i < 1; i++ {
-		//err = c.Call("Arith.Multiply", args, &reply)
-		err = c.Call("Arith.getbestblockhash", args, &reply)
+		err = c.Call("Arith.Multiply", args, &reply)
+		//err = c.Call("Arith.getbestblockhash", args, &reply)
 		fmt.Fprint(conn, `{"jsonrpc": "2.0", "method": "getbestblockhash", "params": [], "id": 2`)
 		var resp GetBestBlockHashResp
 		err := dec.Decode(&resp)
@@ -125,5 +126,6 @@ func main() {
 			log.Fatal("Decode: %s:", err)
 		}
 		fmt.Printf("Get best block hash resp: %d %d\n", resp.Id, resp.Result)
+		print("test the end\n")
 	}
 }
